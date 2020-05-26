@@ -1,5 +1,12 @@
+/* APP ROUTES */
+
 const express = require('express');
 const router = express.Router();
+
+const auth = require("../controllers/middlewares/auth");
+const authController = require("../controllers/auth_controller");
+
+const { registerRules } = require('../validation_rules/user');
 
 /* GET / */
 router.get('/', (req, res) => {
@@ -8,6 +15,12 @@ router.get('/', (req, res) => {
 
 router.use('/photos', require('./photos_router'));
 router.use('/albums', require('./albums_router'));
+
+// Add ability to log in
+router.post("/login", authController.login);
+
+// Add ability to register a new user
+router.post("/register", registerRules, authController.register);
 
 
 module.exports = router;

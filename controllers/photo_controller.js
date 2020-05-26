@@ -25,7 +25,7 @@ const index = async (req, res) => {
 // Get a specific photo
 const show = async (req, res) => {
 	try {
-		const photo = await models.Photo.fetchById(req.params.photoId);
+		const photo = await models.Photo.fetchById(req.params.photoId, { withRelated: "albums" });
 
 		if (photo) {
 			res.send({
