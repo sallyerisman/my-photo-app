@@ -14,11 +14,14 @@ const knex = require('knex')({
 
 const bookshelf = require('bookshelf')(knex);
 
+const Album = require('./Album')(bookshelf);
 const Photo = require('./Photo')(bookshelf);
 
 
 module.exports = {
 	bookshelf,
+
+	Album,
 	Photo,
 };
 

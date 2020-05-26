@@ -8,7 +8,7 @@ const index = async (req, res) => {
 		const all_photos = await models.Photo.fetchAll();
 
 		res.send({
-			status: 'success',
+			status: "success",
 			data: {
 				photos: all_photos
 			}
@@ -29,7 +29,7 @@ const show = async (req, res) => {
 
 		if (photo) {
 			res.send({
-				status: 'success',
+				status: "success",
 				data: {
 					photo,
 				}
@@ -37,13 +37,13 @@ const show = async (req, res) => {
 		} else {
 			res.status(404).send({
 				status: "fail",
-				message: `Sorry, database threw an error when trying to photo with id ${req.params.photoId}.`,
+				message: `Sorry, database threw an error when trying to find photo with id ${req.params.photoId}.`,
 			})
 		}
 	} catch {
 		res.status(500).send({
 			status: "error",
-			message: `Sorry, database threw an error when trying to find this particular photo.`,
+			message: "Sorry, database threw an error when trying to find this particular photo.",
 		})
 	}
 };

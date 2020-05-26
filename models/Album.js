@@ -1,8 +1,8 @@
-/* PHOTO MODEL */
+/* ALBUM MODEL */
 
 module.exports = (bookshelf) => {
-	return bookshelf.model('Photo', {
-		tableName: 'photos',
+	return bookshelf.model('Album', {
+		tableName: 'albums',
 	}, {
 		fetchById(id, options) {
 			return new this({ id }).fetch(options)
