@@ -1,10 +1,16 @@
 /* USER VALIDATION RULES */
 
 const { body } = require('express-validator');
-const { User } = require('../models');
+const { User } = require('../../models');
+
+const createRules = [
+	body('title').isLength({ min: 2 }),
+	body('url').isLength({ min: 10 }),
+	body('description').optional().isLength({ min: 3 }),
+];
 
 const registerRules = [
-	body('email').isLength({ min: 3 }).custom(async value => {
+	body('email').isEmail().custom(async value => {
 		const user = await new User({ email: value }).fetch({ require: false });
 		if (user) {
 			return Promise.reject('Email already exists.');
@@ -18,5 +24,6 @@ const registerRules = [
 ];
 
 module.exports = {
+	createRules,
 	registerRules,
 }

@@ -1,8 +1,9 @@
 /*  PHOTO CONTROLLER */
 
+const { matchedData, validationResult } = require("express-validator");
 const { User, Photo } = require('../models');
 
-// Get all of the user's photos
+/* Get all of the user's photos */
 const index = async (req, res) => {
 
 	let user = null;
@@ -27,7 +28,7 @@ const index = async (req, res) => {
 	}
 };
 
-// Get a specific photo
+/* Get a specific photo */
 const show = async (req, res) => {
 	try {
 		const photo = await Photo.fetchById(req.params.photoId, { withRelated: "user" });
@@ -54,7 +55,42 @@ const show = async (req, res) => {
 	}
 };
 
+/* Create new photo */
+const createPhoto = async (req, res) => {
+	// Find any validation errors and wrap them in an object
+	console.log("I am here!")
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		res.status(422).send({
+			status: "fail",
+			data: errors.array(),
+		});
+		return;
+	}
+
+	const validData = matchedData(req);
+
+	try {
+		const photo = await new Photo(validData).save();
+		console.log("Created new photo successfully:", photo);
+
+		res.status(201).send({
+			status: 'success',
+			data: null,
+		});
+
+	} catch (error) {
+		res.status(500).send({
+			status: 'error',
+			message: 'Exception thrown in database when creating a new photo.',
+		});
+		throw error;
+	}
+
+}
+
 module.exports = {
 	index,
 	show,
+	createPhoto,
 }
