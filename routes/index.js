@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 	res.send({ status: "Let's look at some photos!" });
 });
 
-router.use('/album', [auth.validateJWT], require('./albums_router'));
+router.use('/albums', [auth.validateJWT], require('./albums_router'));
 router.use('/photos', [auth.validateJWT], require('./photos_router'));
 
 // Add ability to log in

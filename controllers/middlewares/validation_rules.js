@@ -3,7 +3,12 @@
 const { body } = require('express-validator');
 const { User } = require('../../models');
 
-const createRules = [
+
+const createAlbumRules = [
+	body('title').isLength({ min: 2 }),
+];
+
+const createPhotoRules = [
 	body('title').isLength({ min: 2 }),
 	body('url').isLength({ min: 10 }),
 	body('description').optional().isLength({ min: 3 }),
@@ -24,6 +29,7 @@ const registerRules = [
 ];
 
 module.exports = {
-	createRules,
+	createAlbumRules,
+	createPhotoRules,
 	registerRules,
 }

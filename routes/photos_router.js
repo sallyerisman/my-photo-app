@@ -4,15 +4,15 @@ const express = require('express');
 const router = express.Router();
 
 const { index, createPhoto, show } = require("../controllers/photo_controller");
-const { createRules } = require('../controllers/middlewares/validation_rules');
+const { createPhotoRules } = require('../controllers/middlewares/validation_rules');
 
-// GET /
+// GET /photos
 router.get('/', index);
 
 // POST /photos
-router.post('/photos', [ createRules ], createPhoto);
+router.post('/', [ createPhotoRules ], createPhoto);
 
-// GET /:photoId
+// GET photos/:photoId
 router.get('/:photoId', show);
 
 

@@ -58,7 +58,6 @@ const show = async (req, res) => {
 /* Create new photo */
 const createPhoto = async (req, res) => {
 	// Find any validation errors and wrap them in an object
-	console.log("I am here!")
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		res.status(422).send({
@@ -71,8 +70,7 @@ const createPhoto = async (req, res) => {
 	const validData = matchedData(req);
 
 	try {
-		const photo = await new Photo(validData).save();
-		console.log("Created new photo successfully:", photo);
+		await new Photo(validData).save();
 
 		res.status(201).send({
 			status: 'success',

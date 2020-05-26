@@ -3,12 +3,16 @@
 const express = require('express');
 const router = express.Router();
 
-const { index, show } = require("../controllers/album_controller");
+const { index, createAlbum, show } = require("../controllers/album_controller");
+const { createAlbumRules } = require('../controllers/middlewares/validation_rules');
 
-// GET /
+// GET /albums
 router.get('/', index);
 
-// GET /:albumId
+// POST /albums
+router.post('/', [ createAlbumRules ], createAlbum);
+
+// GET albums/:albumId
 router.get('/:albumId', show);
 
 
