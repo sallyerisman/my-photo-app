@@ -1,44 +1,50 @@
 /*  PHOTO CONTROLLER */
 
-const models = require('../models');
+const { User, Photo } = require('../models');
 
 // Get all of the user's photos
 const index = async (req, res) => {
+
+	let user = null;
 	try {
-		const all_photos = await models.Photo.fetchAll();
+		user = await User.fetchById(req.user.data.id, { withRelated: "photos" });
+
+		// Get this user's photos
+		const photos = user.related("photos");
 
 		res.send({
 			status: "success",
 			data: {
-				photos: all_photos
+				photos,
 			}
 		});
-	} catch {
-		res.status(500).send({
-			status: "error",
-			message: "Sorry, database threw an error when trying to get all photos.",
-		})
-	}
 
+	} catch {
+		res.status(404).send({
+			status: "fail",
+			data: "Photos not found.",
+		});
+	}
 };
 
 // Get a specific photo
 const show = async (req, res) => {
 	try {
-		const photo = await models.Photo.fetchById(req.params.photoId, { withRelated: "albums" });
+		const photo = await Photo.fetchById(req.params.photoId, { withRelated: "user" });
 
-		if (photo) {
+		const userId = req.user.data.id;
+
+		// Get the user who owns the photo
+		const [ user ] = photo.related("user");
+
+		if (user.id === userId) {
 			res.send({
 				status: "success",
 				data: {
 					photo,
 				}
 			});
-		} else {
-			res.status(404).send({
-				status: "fail",
-				message: `Sorry, database threw an error when trying to find photo with id ${req.params.photoId}.`,
-			})
+			return;
 		}
 	} catch {
 		res.status(500).send({

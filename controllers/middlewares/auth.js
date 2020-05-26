@@ -2,7 +2,6 @@
 
 const jwt = require("jsonwebtoken");
 const { getHeadersToken } = require("../auth_controller")
-const { User } = require('../../models');
 
 
 /* Validate (JWT) access token */
@@ -30,7 +29,7 @@ const validateJWT = (req, res, next) => {
 		throw err;
 	}
 
-	// Attach apyload to req.user
+	// Attach payload to req.user
 	req.user = payload;
 
 	next();

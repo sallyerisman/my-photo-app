@@ -13,14 +13,14 @@ router.get('/', (req, res) => {
 	res.send({ status: "Let's look at some photos!" });
 });
 
-router.use('/photos', require('./photos_router'));
-router.use('/albums', require('./albums_router'));
-
 // Add ability to log in
 router.post("/login", authController.login);
 
 // Add ability to register a new user
 router.post("/register", registerRules, authController.register);
+
+// Add ability to validate JWTs
+router.use('/profile', [auth.validateJWT], require('./profile_router'));
 
 
 module.exports = router;
