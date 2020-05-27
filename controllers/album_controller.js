@@ -90,8 +90,8 @@ const createAlbum = async (req, res) => {
 	}
 }
 
-/* Add photo to a specific album */
-const addPhoto = async (req, res) => {
+/* Add photos to a specific album */
+const addPhotos = async (req, res) => {
 	// Find any validation errors and wrap them in an object
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -102,26 +102,42 @@ const addPhoto = async (req, res) => {
 		return;
 	}
 
+	const validData = matchedData(req);
+
 	try {
-		const photo = await Photo.fetchById(req.body.photo_id);
 		const album = await Album.fetchById(req.params.albumId);
 
 		const userId = req.user.data.id;
 		const user_id = album.get("user_id");
 
-		let result = null;
-		if (user_id === userId) {
-			result = await album.photos().attach(photo);
+		if (user_id !== userId) {
+			res.status(401).send({
+				status: "fail",
+				data: "You are not authorized to make changes to this album.",
+			});
+			return;
 		}
 
-		res.status(201).send({
-			status: "success",
-			data: result,
-		})
+		let photo_ids = false;
+		if (validData.photos) {
+			photo_ids = validData.photos;
+		}
+
+		for (let i = 0; i < photo_ids.length; i++) {
+			let photo = await Photo.fetchById(photo_ids[i]);
+			if (photo) {
+				await album.photos().attach(photo);
+
+				res.status(201).send({
+					status: "success",
+					data: null,
+				})
+			}
+		}
 	} catch (err) {
 		res.status(500).send({
 			status: 'error',
-			data: "Exeption thrown when trying to add photo to the album profile.",
+			data: "Exeption thrown when trying to add photo to the album.",
 		});
 		throw err;
 	}
@@ -131,5 +147,5 @@ module.exports = {
 	index,
 	show,
 	createAlbum,
-	addPhoto,
+	addPhotos,
 }

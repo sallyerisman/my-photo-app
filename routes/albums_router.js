@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { index, createAlbum, show, addPhoto } = require("../controllers/album_controller");
-const { addPhotoRules, createAlbumRules } = require('../controllers/middlewares/validation_rules');
+const { index, createAlbum, show, addPhotos } = require("../controllers/album_controller");
+const { addPhotosRules, createAlbumRules } = require('../controllers/middlewares/validation_rules');
 
 // GET /albums
 router.get('/', index);
@@ -16,7 +16,7 @@ router.post('/', [ createAlbumRules ], createAlbum);
 router.get('/:albumId', show);
 
 // POST /albums/:albumId
-router.post('/:albumId', [ addPhotoRules ], addPhoto);
+router.post('/:albumId', [ addPhotosRules ], addPhotos);
 
 
 module.exports = router;

@@ -4,10 +4,30 @@ const { body } = require('express-validator');
 const { Photo, User } = require('../../models');
 
 
-const addPhotoRules = [
-	body('photo_id').custom(value => {
-		return Photo.fetchById(value);
-	}),
+// const addPhotoRules = [
+// 	body('photo_id').custom(value => {
+// 		return Photo.fetchById(value);
+// 	}),
+// ];
+
+const id_validator = async values => {
+	// check that every element in array is a number
+	if (!values.every(Number.isInteger)) {
+		return Promise.reject("Invalid value in array");
+	}
+
+	// check for match in database
+	for (let i = 0; i < values.length; i++) {
+		const result = await Photo.fetchById(values[i]);
+
+		if (!result) {
+			return Promise.reject(`Photo ${values[i]} does not exist.`)
+		}
+	}
+ };
+
+const addPhotosRules = [
+	body('photos').isArray().custom(id_validator),
 ];
 
 const createAlbumRules = [
@@ -35,7 +55,7 @@ const registerRules = [
 ];
 
 module.exports = {
-	addPhotoRules,
+	addPhotosRules,
 	createAlbumRules,
 	createPhotoRules,
 	registerRules,
