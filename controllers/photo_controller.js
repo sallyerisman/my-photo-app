@@ -15,7 +15,6 @@ const index = async (req, res) => {
 				photos,
 			}
 		});
-
 	} catch {
 		res.status(404).send({
 			status: "fail",
@@ -27,14 +26,11 @@ const index = async (req, res) => {
 /* Get a specific photo */
 const show = async (req, res) => {
 	try {
-		const photo = await Photo.fetchById(req.params.photoId, { withRelated: "user" });
-
+		const photo = await Photo.fetchById(req.params.photoId);
 		const userId = req.user.data.id;
+		const user_id = photo.get("user_id");
 
-		// Get the user who owns the photo
-		const [ user ] = photo.related("user");
-
-		if (user.id === userId) {
+		if (user_id === userId) {
 			res.send({
 				status: "success",
 				data: {

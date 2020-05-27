@@ -15,7 +15,6 @@ const index = async (req, res) => {
 				albums,
 			}
 		});
-
 	} catch {
 		res.status(404).send({
 			status: "fail",
@@ -27,14 +26,13 @@ const index = async (req, res) => {
 /* Get a specific album */
 const show = async (req, res) => {
 	try {
-		const album = await Album.fetchById(req.params.albumId, { withRelated: "user" });
+		const album = await Album.fetchById(req.params.albumId);
 
+		console.log("ALBUM: ", album)
 		const userId = req.user.data.id;
+		const user_id = album.get("user_id");
 
-		// Get the user who owns the photo
-		const [ user ] = album.related("user");
-
-		if (user.id === userId) {
+		if (user_id === userId) {
 			res.send({
 				status: "success",
 				data: {
