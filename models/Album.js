@@ -6,9 +6,6 @@ module.exports = (bookshelf) => {
 		photos() {
 			return this.hasMany('Photo');
 		},
-		user() {
-			return this.belongsToMany('User');
-		}
 	}, {
 		fetchById(id, options) {
 			return new this({ id }).fetch(options)

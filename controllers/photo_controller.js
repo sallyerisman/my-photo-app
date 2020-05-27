@@ -5,13 +5,9 @@ const { User, Photo } = require('../models');
 
 /* Get all of the user's photos */
 const index = async (req, res) => {
-
-	let user = null;
 	try {
-		user = await User.fetchById(req.user.data.id, { withRelated: "photos" });
-
-		// Get this user's photos
-		const photos = user.related("photos");
+		const userId = req.user.data.id;
+		const photos = await Photo.where("user_id", userId).fetchAll();
 
 		res.send({
 			status: "success",
@@ -42,7 +38,12 @@ const show = async (req, res) => {
 			res.send({
 				status: "success",
 				data: {
-					photo,
+					photo: {
+						id: photo.get('id'),
+						title: photo.get('title'),
+						url: photo.get('url'),
+						description: photo.get('description'),
+					},
 				}
 			});
 			return;

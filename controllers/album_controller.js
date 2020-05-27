@@ -5,13 +5,9 @@ const { User, Album } = require('../models');
 
 /* Get all of the user's albums */
 const index = async (req, res) => {
-
-	let user = null;
 	try {
-		user = await User.fetchById(req.user.data.id, { withRelated: "albums" });
-
-		// Get this user's albums
-		const albums = user.related("albums");
+		const userId = req.user.data.id;
+		const albums = await Album.where("user_id", userId).fetchAll();
 
 		res.send({
 			status: "success",
@@ -31,33 +27,26 @@ const index = async (req, res) => {
 /* Get a specific album */
 const show = async (req, res) => {
 	try {
-		const album = await Album.fetchById(req.params.albumId, { withRelated: "photos" });
+		const album = await Album.fetchById(req.params.albumId, { withRelated: "user" });
 
-		const [ photos ] = album.related("photos");
-		console.log("PHOTOS: ", photos)
+		const userId = req.user.data.id;
 
-		if (album) {
+		// Get the user who owns the photo
+		const [ user ] = album.related("user");
+
+		if (user.id === userId) {
 			res.send({
 				status: "success",
 				data: {
-					album,
+					album: {
+						id: album.get('id'),
+						title: album.get('title'),
+					},
 				}
 			});
 			return;
 		}
 
-		// // Get the user who owns the photo
-		// const [ user ] = album.related("user");
-
-		// if (user.id === userId) {
-		// 	res.send({
-		// 		status: "success",
-		// 		data: {
-		// 			album,
-		// 		}
-		// 	});
-		// 	return;
-		// }
 	} catch {
 		res.status(500).send({
 			status: "error",
