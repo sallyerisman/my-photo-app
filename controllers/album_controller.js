@@ -1,7 +1,7 @@
 /*  ALBUM CONTROLLER */
 
 const { matchedData, validationResult } = require("express-validator");
-const { User, Album } = require('../models');
+const { Album, Photo } = require('../models');
 
 /* Get all of the user's albums */
 const index = async (req, res) => {
@@ -26,11 +26,11 @@ const index = async (req, res) => {
 /* Get a specific album */
 const show = async (req, res) => {
 	try {
-		const album = await Album.fetchById(req.params.albumId);
+		const album = await Album.fetchById(req.params.albumId, { withRelated: "photos" });
 
-		console.log("ALBUM: ", album)
 		const userId = req.user.data.id;
 		const user_id = album.get("user_id");
+		const photos = album.related("photos");
 
 		if (user_id === userId) {
 			res.send({
@@ -39,6 +39,7 @@ const show = async (req, res) => {
 					album: {
 						id: album.get('id'),
 						title: album.get('title'),
+						photos,
 					},
 				}
 			});
@@ -89,8 +90,46 @@ const createAlbum = async (req, res) => {
 	}
 }
 
+/* Add photo to a specific album */
+const addPhoto = async (req, res) => {
+	// Find any validation errors and wrap them in an object
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		res.status(422).send({
+			status: 'fail',
+			data: errors.array(),
+		});
+		return;
+	}
+
+	try {
+		const photo = await Photo.fetchById(req.body.photo_id);
+		const album = await Album.fetchById(req.params.albumId);
+
+		const userId = req.user.data.id;
+		const user_id = album.get("user_id");
+
+		let result = null;
+		if (user_id === userId) {
+			result = await album.photos().attach(photo);
+		}
+
+		res.status(201).send({
+			status: "success",
+			data: result,
+		})
+	} catch (err) {
+		res.status(500).send({
+			status: 'error',
+			data: "Exeption thrown when trying to add photo to the album profile.",
+		});
+		throw err;
+	}
+}
+
 module.exports = {
 	index,
 	show,
 	createAlbum,
+	addPhoto,
 }

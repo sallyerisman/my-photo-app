@@ -4,7 +4,7 @@ module.exports = (bookshelf) => {
 	return bookshelf.model('Photo', {
 		tableName: 'photos',
 		albums() {
-			return this.belongsToMany('Album');
+			return this.hasMany('Album');
 		},
 	}, {
 		fetchById(id, options) {

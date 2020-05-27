@@ -1,8 +1,14 @@
 /* USER VALIDATION RULES */
 
 const { body } = require('express-validator');
-const { User } = require('../../models');
+const { Photo, User } = require('../../models');
 
+
+const addPhotoRules = [
+	body('photo_id').custom(value => {
+		return Photo.fetchById(value);
+	}),
+];
 
 const createAlbumRules = [
 	body('title').isLength({ min: 2 }),
@@ -29,6 +35,7 @@ const registerRules = [
 ];
 
 module.exports = {
+	addPhotoRules,
 	createAlbumRules,
 	createPhotoRules,
 	registerRules,
