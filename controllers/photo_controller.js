@@ -26,9 +26,11 @@ const index = async (req, res) => {
 /* Get a specific photo */
 const show = async (req, res) => {
 	try {
-		const photo = await Photo.fetchById(req.params.photoId);
+		const photo = await Photo.fetchById(req.params.photoId, {withRelated: "albums" });
 		const userId = req.user.data.id;
 		const user_id = photo.get("user_id");
+
+		const albums = photo.related("albums");
 
 		if (user_id === userId) {
 			res.send({
@@ -39,6 +41,7 @@ const show = async (req, res) => {
 						title: photo.get('title'),
 						url: photo.get('url'),
 						description: photo.get('description'),
+						albums,
 					},
 				}
 			});
@@ -88,11 +91,49 @@ const createPhoto = async (req, res) => {
 		});
 		throw error;
 	}
-
 }
+
+/* Delete a specific photo */
+const destroy = async (req, res) => {
+	const photoId = req.params.photoId;
+
+	try {
+		const photo = await Photo.fetchById(photoId, { withRelated: "albums" });
+		if (!photo) {
+			res.status(405).send({
+				status: "fail",
+				data: `No photo with ID ${photoId} to delete.`,
+			});
+			return;
+		}
+
+		const userId = req.user.data.id;
+		const user_id = photo.get("user_id");
+
+		if (user_id === userId) {
+
+			photo.albums().detach();
+			photo.destroy();
+
+			res.send({
+				status: 'success',
+				data: null,
+			});
+			return;
+		}
+	} catch (error) {
+		res.status(500).send({
+			status: "error",
+			message: `Sorry, database threw an error when trying to delete photo with ID ${photoId}.`,
+		});
+		throw error;
+	}
+};
+
 
 module.exports = {
 	index,
 	show,
 	createPhoto,
+	destroy,
 }

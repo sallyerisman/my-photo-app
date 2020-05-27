@@ -143,9 +143,47 @@ const addPhotos = async (req, res) => {
 	}
 }
 
+/* Delete an album */
+const destroy = async (req, res) => {
+	const albumId = req.params.albumId;
+
+	try {
+		const album = await Album.fetchById(albumId, { withRelated: "photos" });
+		if (!album) {
+			res.status(405).send({
+				status: "fail",
+				data: `No album with ID ${albumId} to delete.`,
+			});
+			return;
+		}
+
+		const userId = req.user.data.id;
+		const user_id = album.get("user_id");
+
+		if (user_id === userId) {
+
+			album.photos().detach();
+			album.destroy();
+
+			res.send({
+				status: 'success',
+				data: null,
+			});
+			return;
+		}
+	} catch (error) {
+		res.status(500).send({
+			status: "error",
+			message: `Sorry, database threw an error when trying to delete photo with ID ${albumId}.`,
+		});
+		throw error;
+	}
+};
+
 module.exports = {
 	index,
 	show,
 	createAlbum,
 	addPhotos,
+	destroy,
 }
