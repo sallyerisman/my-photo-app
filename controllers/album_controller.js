@@ -66,10 +66,14 @@ const createAlbum = async (req, res) => {
 	}
 
 	const validData = matchedData(req);
-	console.log("Valid data: ", validData);
+
+	const album = {
+		title: validData.title,
+		user_id: req.user.data.id
+	}
 
 	try {
-		await new Album(validData).save();
+		await new Album(album).save();
 
 		res.status(201).send({
 			status: 'success',

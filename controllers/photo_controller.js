@@ -66,8 +66,15 @@ const createPhoto = async (req, res) => {
 
 	const validData = matchedData(req);
 
+	const photo = {
+		title: validData.title,
+		url: validData.url,
+		description: validData.description,
+		user_id: req.user.data.id
+	}
+
 	try {
-		await new Photo(validData).save();
+		await new Photo(photo).save();
 
 		res.status(201).send({
 			status: 'success',
