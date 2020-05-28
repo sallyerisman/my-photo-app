@@ -1,5 +1,5 @@
 
-// Setting up database connection
+/* ESTABLISHING MODEL-DATABASE CONNECTION */
 
 const knex = require('knex')({
 	client: 'mysql',
@@ -20,7 +20,6 @@ const User = require('./User')(bookshelf);
 
 module.exports = {
 	bookshelf,
-
 	Album,
 	Photo,
 	User,

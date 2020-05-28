@@ -118,21 +118,14 @@ const addPhotos = async (req, res) => {
 			return;
 		}
 
-		let photo_ids = false;
 		if (validData.photos) {
-			photo_ids = validData.photos;
-		}
+			await album.photos().attach(validData.photos);
 
-		for (let i = 0; i < photo_ids.length; i++) {
-			let photo = await Photo.fetchById(photo_ids[i]);
-			if (photo) {
-				await album.photos().attach(photo);
-
-				res.status(201).send({
-					status: "success",
-					data: null,
-				})
-			}
+			res.status(201).send({
+				status: "success",
+				data: null,
+			});
+			return;
 		}
 	} catch (err) {
 		res.status(500).send({

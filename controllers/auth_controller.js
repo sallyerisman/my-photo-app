@@ -91,7 +91,7 @@ const getHeadersToken = (req) => {
 	// Split authorization header into its components
 	const [authType, token] = req.headers.authorization.split(' ');
 
-	// Check that the authorization type is Bearer
+	// Check that the authType is Bearer
 	if (authType.toLowerCase() !== "bearer") {
 		return false;
 	}

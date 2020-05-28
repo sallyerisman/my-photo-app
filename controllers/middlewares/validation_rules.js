@@ -1,14 +1,8 @@
-/* USER VALIDATION RULES */
+/* VALIDATION RULES */
 
 const { body } = require('express-validator');
 const { Photo, User } = require('../../models');
 
-
-// const addPhotoRules = [
-// 	body('photo_id').custom(value => {
-// 		return Photo.fetchById(value);
-// 	}),
-// ];
 
 const id_validator = async values => {
 	// check that every element in array is a number
