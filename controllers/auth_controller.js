@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
 
-/* Issue access token */
+/* Issue (JWT) access and refresh tokens */
 const login = async (req, res) => {
 	const user = await User.login(req.body.email, req.body.password);
 	if (!user) {
@@ -25,17 +25,59 @@ const login = async (req, res) => {
 		}
 	};
 
-	// Sign payload and get (JWT) access token
-	const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFETIME || "1d" });
+	// Sign payload and get access token
+	const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFETIME || "1h" });
+
+	// Sign payload and get refresh token
+	const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFETIME || "1d" });
 
 	res.send({
 		status: "success",
 		data: {
 			accessToken,
+			refreshToken,
 		},
 	});
 }
 
+/* Issue new access token */
+const refresh = (req, res) => {
+	const token = getTokenfromHeaders(req);
+	if (!token) {
+		res.status(401).send({
+			status: "fail",
+			data: "No token found in request headers.",
+		});
+		return;
+	}
+
+	try {
+		// Verify token using the refresh token secret
+		const { data } = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+
+		// Construct new payload
+		const payload = {
+			data,
+		}
+
+		// Issue a new token using the access token secret
+		const access_token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFETIME || "1h"});
+
+		res.send({
+			status: "success",
+			data: {
+				access_token,
+			},
+		});
+
+	} catch {
+		res.status(403).send({
+			status: "fail",
+			data: "Invalid token.",
+		});
+		return;
+	}
+}
 
 /* Register new user */
 const register = async (req, res) => {
@@ -101,6 +143,7 @@ const getHeadersToken = (req) => {
 
 module.exports = {
 	login,
+	refresh,
 	register,
 	getHeadersToken,
 }
