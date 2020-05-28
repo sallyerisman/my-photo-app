@@ -91,7 +91,57 @@ const createPhoto = async (req, res) => {
 		});
 		throw error;
 	}
-}
+};
+
+/* Update photo description */
+const updatePhotoDescription = async (req, res) => {
+	// Find any validation errors and wrap them in an object
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		res.status(422).send({
+			status: 'fail',
+			data: errors.array(),
+		});
+		return;
+	}
+
+	const validData = matchedData(req);
+
+	let photo = null;
+	try {
+		photo = await Photo.fetchById(req.params.photoId);
+		const userId = req.user.data.id;
+		const user_id = photo.get("user_id");
+
+		if (user_id !== userId) {
+			res.status(401).send({
+				status: "fail",
+				data: "You are not authorized to make changes to this photo.",
+			});
+			return;
+		}
+	} catch {
+		res.status(500).send({
+			status: "error",
+			message: "Sorry, database threw an error when trying to find this particular photo.",
+		})
+	}
+
+	try {
+		await photo.save(validData);
+		res.status(204).send({
+			status: "success",
+			data: null,
+		});
+	} catch (error) {
+		res.status(500).send({
+			status: "error",
+			message: "Error thrown in database when trying to update the photo description.",
+		});
+		throw error;
+	}
+};
+
 
 /* Delete a specific photo */
 const destroy = async (req, res) => {
@@ -135,5 +185,6 @@ module.exports = {
 	index,
 	show,
 	createPhoto,
+	updatePhotoDescription,
 	destroy,
 }

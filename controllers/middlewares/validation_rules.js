@@ -48,9 +48,14 @@ const registerRules = [
 	body('last_name').optional().isLength({ min: 2 }),
 ];
 
+const updateDescriptionRules = [
+	body('description').isLength({ min: 3 }),
+];
+
 module.exports = {
 	addPhotosRules,
 	createAlbumRules,
 	createPhotoRules,
 	registerRules,
+	updateDescriptionRules,
 }
