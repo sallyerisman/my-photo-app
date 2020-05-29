@@ -26,11 +26,20 @@ const index = async (req, res) => {
 const show = async (req, res) => {
 	let album = null;
 	try {
-		album = await new Album({ id: req.params.albumId, user_id: req.user.data.id}).fetch({ withRelated: "photos" });
+		album = await Album.fetchById(req.params.albumId, { withRelated: "photos" });
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: `Album with ID ${req.params.albumId} was not found.`,
+		});
+		return;
+	}
+
+	const userId = album.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to access album with ID ${req.params.albumId}.`,
 		});
 		return;
 	}
@@ -98,11 +107,20 @@ const createAlbum = async (req, res) => {
 const addPhotos = async (req, res) => {
 	let album = null;
 	try {
-		album = await new Album({ id: req.params.albumId, user_id: req.user.data.id}).fetch();
+		album = await Album.fetchById(req.params.albumId);
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: `Album with ID ${req.params.albumId} was not found.`,
+		});
+		return;
+	}
+
+	const userId = album.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to add photos to album with ID ${req.params.albumId}.`,
 		});
 		return;
 	}
@@ -142,11 +160,20 @@ const addPhotos = async (req, res) => {
 const updateAlbumTitle = async (req, res) => {
 	let album = null;
 	try {
-		album = await new Album({ id: req.params.albumId, user_id: req.user.data.id}).fetch();
+		album = await Album.fetchById(req.params.albumId);
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: `Album with ID ${req.params.albumId} was not found.`,
+		});
+		return;
+	}
+
+	const userId = album.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to make changes to album with ID ${req.params.albumId}.`,
 		});
 		return;
 	}
@@ -183,11 +210,20 @@ const updateAlbumTitle = async (req, res) => {
 const removePhoto = async (req, res) => {
 	let album = null;
 	try {
-		album = await new Album({ id: req.params.albumId, user_id: req.user.data.id}).fetch({ withRelated: "photos" });
+		album = await Album.fetchById(req.params.albumId, { withRelated: "photos" });
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: `Album with ID ${req.params.albumId} was not found.`,
+		});
+		return;
+	}
+
+	const userId = album.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to make changes to album with ID ${req.params.albumId}.`,
 		});
 		return;
 	}
@@ -214,11 +250,20 @@ const removePhoto = async (req, res) => {
 const destroy = async (req, res) => {
 	let album = null;
 	try {
-		album = await new Album({ id: req.params.albumId, user_id: req.user.data.id}).fetch({ withRelated: "photos" });
+		album = await Album.fetchById(req.params.albumId, { withRelated: "photos" });
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: `Album with ID ${req.params.albumId} was not found.`,
+		});
+		return;
+	}
+
+	const userId = album.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to delete album with ID ${req.params.albumId}.`,
 		});
 		return;
 	}

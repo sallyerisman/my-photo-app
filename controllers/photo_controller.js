@@ -26,11 +26,20 @@ const index = async (req, res) => {
 const show = async (req, res) => {
 	let photo = null;
 	try {
-		photo = await new Photo({ id: req.params.photoId, user_id: req.user.data.id}).fetch({ withRelated: "albums" });
+		photo = await Photo.fetchById(req.params.photoId, { withRelated: "albums" });
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: `Photo with ID ${req.params.photoId} was not found.`,
+		});
+		return;
+	}
+
+	const userId = photo.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to access photo with ID ${req.params.photoId}.`,
 		});
 		return;
 	}
@@ -102,11 +111,20 @@ const createPhoto = async (req, res) => {
 const updatePhotoComment = async (req, res) => {
 	let photo = null;
 	try {
-		photo = await new Photo({ id: req.params.photoId, user_id: req.user.data.id}).fetch();
+		photo = await Photo.fetchById(req.params.photoId);
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			data: `Photo with ID ${req.params.photoId} not found.`,
+		});
+		return;
+	}
+
+	const userId = photo.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to update photo with ID ${req.params.photoId}.`,
 		});
 		return;
 	}
@@ -144,11 +162,20 @@ const updatePhotoComment = async (req, res) => {
 const destroy = async (req, res) => {
 	let photo = null;
 	try {
-		photo = await new Photo({ id: req.params.photoId, user_id: req.user.data.id}).fetch({ withRelated: "albums" });
+		photo = await Photo.fetchById(req.params.photoId, { withRelated: "albums" });
 	} catch {
 		res.status(404).send({
 			status: "fail",
 			message: "Photo not found.",
+		});
+		return;
+	}
+
+	const userId = photo.get("user_id");
+	if (userId !== req.user.data.id) {
+		res.status(401).send({
+			status: "fail",
+			message: `You are not authorized to delete photo with ID ${req.params.photoId}.`,
 		});
 		return;
 	}
