@@ -39,9 +39,9 @@ module.exports = (bookshelf) => {
 				? user
 				: false;
 
-		} catch (err) {
-			console.log("There was an error: ", err)
-		}
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	});
 };
