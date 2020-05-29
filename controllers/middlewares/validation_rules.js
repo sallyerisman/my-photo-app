@@ -21,7 +21,7 @@ const id_validator = async values => {
  };
 
 const addPhotosRules = [
-	body('photos').isArray().custom(id_validator),
+	body('photo_ids').isArray().custom(id_validator),
 ];
 
 const createAlbumRules = [
@@ -31,7 +31,7 @@ const createAlbumRules = [
 const createPhotoRules = [
 	body('title').isLength({ min: 2 }),
 	body('url').isLength({ min: 10 }),
-	body('description').optional().isLength({ min: 3 }),
+	body('comment').optional().isLength({ min: 3 }),
 ];
 
 const registerRules = [
@@ -48,8 +48,12 @@ const registerRules = [
 	body('last_name').optional().isLength({ min: 2 }),
 ];
 
-const updateDescriptionRules = [
-	body('description').isLength({ min: 3 }),
+const updateAlbumRules = [
+	body('title').isLength({ min: 2 }),
+];
+
+const updateCommentRules = [
+	body('comment').isLength({ min: 3 }),
 ];
 
 module.exports = {
@@ -57,5 +61,6 @@ module.exports = {
 	createAlbumRules,
 	createPhotoRules,
 	registerRules,
-	updateDescriptionRules,
+	updateAlbumRules,
+	updateCommentRules,
 }

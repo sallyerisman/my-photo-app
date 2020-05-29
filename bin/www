@@ -7,7 +7,7 @@
 require('dotenv').config();
 
 const app = require('../app');
-const debug = require('debug')('11-library_api:server');
+const debug = require('debug')('my-photo-app:server');
 const http = require('http');
 
 /**

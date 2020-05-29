@@ -1,15 +1,14 @@
 /*  PHOTO CONTROLLER */
 
 const { matchedData, validationResult } = require("express-validator");
-const { User, Photo } = require('../models');
+const { Photo } = require('../models');
 
 /* Get all of the user's photos */
 const index = async (req, res) => {
 	try {
-		const userId = req.user.data.id;
-		const photos = await Photo.where("user_id", userId).fetchAll();
+		const photos = await Photo.where("user_id", req.user.data.id).fetchAll();
 
-		res.send({
+		res.status(200).send({
 			status: "success",
 			data: {
 				photos,
@@ -25,33 +24,39 @@ const index = async (req, res) => {
 
 /* Get a specific photo */
 const show = async (req, res) => {
+	let photo = null;
 	try {
-		const photo = await Photo.fetchById(req.params.photoId, {withRelated: "albums" });
-		const userId = req.user.data.id;
-		const user_id = photo.get("user_id");
+		photo = await new Photo({ id: req.params.photoId, user_id: req.user.data.id}).fetch({ withRelated: "albums" });
+	} catch {
+		res.status(404).send({
+			status: "fail",
+			message: `Photo with ID ${req.params.photoId} was not found.`,
+		});
+		return;
+	}
 
+	try {
 		const albums = photo.related("albums");
 
-		if (user_id === userId) {
-			res.send({
-				status: "success",
-				data: {
-					photo: {
-						id: photo.get('id'),
-						title: photo.get('title'),
-						url: photo.get('url'),
-						description: photo.get('description'),
-						albums,
-					},
-				}
-			});
-			return;
-		}
-	} catch {
+		res.status(200).send({
+			status: "success",
+			data: {
+				photo: {
+					id: photo.get('id'),
+					title: photo.get('title'),
+					url: photo.get('url'),
+					comment: photo.get('comment'),
+					albums,
+				},
+			}
+		});
+		return;
+	} catch (error) {
 		res.status(500).send({
 			status: "error",
-			message: "Sorry, database threw an error when trying to find this particular photo.",
-		})
+			message: "Sorry, database threw an error when trying to get this particular photo.",
+		});
+		throw error;
 	}
 };
 
@@ -72,7 +77,7 @@ const createPhoto = async (req, res) => {
 	const photo = {
 		title: validData.title,
 		url: validData.url,
-		description: validData.description,
+		comment: validData.comment,
 		user_id: req.user.data.id
 	}
 
@@ -80,21 +85,32 @@ const createPhoto = async (req, res) => {
 		await new Photo(photo).save();
 
 		res.status(201).send({
-			status: 'success',
+			status: "success",
 			data: null,
 		});
 
 	} catch (error) {
 		res.status(500).send({
-			status: 'error',
-			message: 'Exception thrown in database when creating a new photo.',
+			status: "error",
+			message: 'Exception thrown in database when trying to create a new photo.',
 		});
 		throw error;
 	}
 };
 
-/* Update photo description */
-const updatePhotoDescription = async (req, res) => {
+/* Update photo comment */
+const updatePhotoComment = async (req, res) => {
+	let photo = null;
+	try {
+		photo = await new Photo({ id: req.params.photoId, user_id: req.user.data.id}).fetch();
+	} catch {
+		res.status(404).send({
+			status: "fail",
+			data: `Photo with ID ${req.params.photoId} not found.`,
+		});
+		return;
+	}
+
 	// Find any validation errors and wrap them in an object
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -107,36 +123,17 @@ const updatePhotoDescription = async (req, res) => {
 
 	const validData = matchedData(req);
 
-	let photo = null;
-	try {
-		photo = await Photo.fetchById(req.params.photoId);
-		const userId = req.user.data.id;
-		const user_id = photo.get("user_id");
-
-		if (user_id !== userId) {
-			res.status(401).send({
-				status: "fail",
-				data: "You are not authorized to make changes to this photo.",
-			});
-			return;
-		}
-	} catch {
-		res.status(500).send({
-			status: "error",
-			message: "Sorry, database threw an error when trying to find this particular photo.",
-		})
-	}
-
 	try {
 		await photo.save(validData);
-		res.status(204).send({
+
+		res.status(200).send({
 			status: "success",
 			data: null,
 		});
 	} catch (error) {
 		res.status(500).send({
 			status: "error",
-			message: "Error thrown in database when trying to update the photo description.",
+			message: "Error thrown in database when trying to update the photo comment.",
 		});
 		throw error;
 	}
@@ -145,36 +142,30 @@ const updatePhotoDescription = async (req, res) => {
 
 /* Delete a specific photo */
 const destroy = async (req, res) => {
-	const photoId = req.params.photoId;
+	let photo = null;
+	try {
+		photo = await new Photo({ id: req.params.photoId, user_id: req.user.data.id}).fetch({ withRelated: "albums" });
+	} catch {
+		res.status(404).send({
+			status: "fail",
+			message: "Photo not found.",
+		});
+		return;
+	}
 
 	try {
-		const photo = await Photo.fetchById(photoId, { withRelated: "albums" });
-		if (!photo) {
-			res.status(405).send({
-				status: "fail",
-				data: `No photo with ID ${photoId} to delete.`,
-			});
-			return;
-		}
+		photo.albums().detach();
+		photo.destroy();
 
-		const userId = req.user.data.id;
-		const user_id = photo.get("user_id");
-
-		if (user_id === userId) {
-
-			photo.albums().detach();
-			photo.destroy();
-
-			res.send({
-				status: 'success',
-				data: null,
-			});
-			return;
-		}
+		res.status(200).send({
+			status: "success",
+			data: null,
+		});
+		return;
 	} catch (error) {
 		res.status(500).send({
 			status: "error",
-			message: `Sorry, database threw an error when trying to delete photo with ID ${photoId}.`,
+			message: `Sorry, database threw an error when trying to delete photo with ID ${req.params.photoId}.`,
 		});
 		throw error;
 	}
@@ -185,6 +176,6 @@ module.exports = {
 	index,
 	show,
 	createPhoto,
-	updatePhotoDescription,
+	updatePhotoComment,
 	destroy,
 }
