@@ -138,8 +138,8 @@ const addPhotos = async (req, res) => {
 	const validData = matchedData(req);
 
 	try {
-		if (validData.photos) {
-			await album.photos().attach(validData.photos);
+		if (validData.photo_ids) {
+			await album.photos().attach(validData.photo_ids);
 
 			res.status(200).send({
 				status: "success",
