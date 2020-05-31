@@ -1,0 +1,488 @@
+{
+	"info": {
+		"_postman_id": "8ca21fac-81be-4324-88fb-f674bda7d30f",
+		"name": "Photo-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Photos",
+			"item": [
+				{
+					"name": "GET  /photos (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/photos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL  /photos/photoId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/photos/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"photos",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  /photos (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDUxOTQzNiwiZXhwIjoxNTkwNjA1ODM2fQ.E9y-rXo_Yvv4n6Oc4Eq5JZSuM5rt7HMkqTVe8Ws3Chs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Melon\",\n\t\"url\": \"https://images.unsplash.com/photo-1571575173700-afb9492e6a50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60\",\n\t\"comment\": \"This is a melon.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/photos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT  /photos/photoId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDUxOTQzNiwiZXhwIjoxNTkwNjA1ODM2fQ.E9y-rXo_Yvv4n6Oc4Eq5JZSuM5rt7HMkqTVe8Ws3Chs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Fluffy cat\",\n\t\"comment\": \"OMG, this cat is fluffy.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/photos/36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"photos",
+								"36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET  /photos/:photoId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/photos/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"photos",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Albums",
+			"item": [
+				{
+					"name": "GET  /albums (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL  /albums/albumId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/albums/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"albums",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL  /albums/albumId/photos/photoId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/albums/2/photos/39",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"albums",
+								"2",
+								"photos",
+								"39"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  /albums (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDUxOTQzNiwiZXhwIjoxNTkwNjA1ODM2fQ.E9y-rXo_Yvv4n6Oc4Eq5JZSuM5rt7HMkqTVe8Ws3Chs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Cats\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST  /albums/albumId/photos (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDUxOTQzNiwiZXhwIjoxNTkwNjA1ODM2fQ.E9y-rXo_Yvv4n6Oc4Eq5JZSuM5rt7HMkqTVe8Ws3Chs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"photo_ids\": [30, 36, 37]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/albums/2/photos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"albums",
+								"2",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT  /albums/albumId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDUxOTQzNiwiZXhwIjoxNTkwNjA1ODM2fQ.E9y-rXo_Yvv4n6Oc4Eq5JZSuM5rt7HMkqTVe8Ws3Chs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Fluffy cat\",\n\t\"comment\": \"OMG, this cat is fluffy.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/photos/36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"photos",
+								"36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET  /albums/albumId (Omar)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJlbWFpbCI6Im9tYXIubGl0dGxlQHRoZXdpcmUuY29tIn0sImlhdCI6MTU5MDQ5NzczNywiZXhwIjoxNTkwNTg0MTM3fQ.0_-tAI66dD5VyiNQvLc6WiSzz8CX091GUxPCuaXYR7E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/albums/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"albums",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "POST  /register (Omar)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"omar.little@thewire.com\",\n\t\"password\": \"omar12345\",\n\t\"first_name\": \"Omar\",\n\t\"last_name\": \"Little\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST  /login (Omar)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"omar.little@thewire.com\",\n\t\"password\": \"omar12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
