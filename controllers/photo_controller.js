@@ -69,8 +69,8 @@ const show = async (req, res) => {
 	}
 };
 
-/* Create new photo */
-const createPhoto = async (req, res) => {
+/* Create and store a new photo */
+const store = async (req, res) => {
 	// Find any validation errors and wrap them in an object
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -107,8 +107,8 @@ const createPhoto = async (req, res) => {
 	}
 };
 
-/* Update photo comment */
-const updatePhotoComment = async (req, res) => {
+/* Update photo title and/or comment */
+const update = async (req, res) => {
 	let photo = null;
 	try {
 		photo = await Photo.fetchById(req.params.photoId);
@@ -202,7 +202,7 @@ const destroy = async (req, res) => {
 module.exports = {
 	index,
 	show,
-	createPhoto,
-	updatePhotoComment,
+	store,
+	update,
 	destroy,
 }

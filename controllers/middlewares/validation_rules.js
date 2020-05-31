@@ -52,7 +52,8 @@ const updateAlbumRules = [
 	body('title').isLength({ min: 2 }),
 ];
 
-const updateCommentRules = [
+const updatePhotoRules = [
+	body('title').isLength({ min: 2 }),
 	body('comment').isLength({ min: 3 }),
 ];
 
@@ -62,5 +63,5 @@ module.exports = {
 	createPhotoRules,
 	registerRules,
 	updateAlbumRules,
-	updateCommentRules,
+	updatePhotoRules,
 }
