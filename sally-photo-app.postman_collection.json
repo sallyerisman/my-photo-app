@@ -24,12 +24,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/photos",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/photos",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"photos"
 							]
@@ -53,12 +54,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/photos/38",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/photos/38",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"photos",
 								"38"
@@ -92,12 +94,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/photos",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/photos",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"photos"
 							]
@@ -130,12 +133,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/photos/36",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/photos/36",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"photos",
 								"36"
@@ -160,12 +164,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/photos/8",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/photos/8",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"photos",
 								"8"
@@ -196,12 +201,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/albums",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/albums",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"albums"
 							]
@@ -225,12 +231,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/albums/7",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/albums/7",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"albums",
 								"7"
@@ -255,12 +262,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/albums/2/photos/39",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/albums/2/photos/39",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"albums",
 								"2",
@@ -296,12 +304,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/albums",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/albums",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"albums"
 							]
@@ -334,12 +343,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/albums/2/photos",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/albums/2/photos",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"albums",
 								"2",
@@ -374,12 +384,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/photos/36",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/photos/36",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"photos",
 								"36"
@@ -404,12 +415,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/albums/2",
-							"protocol": "http",
+							"raw": "https://sally-photo-app.herokuapp.com/albums/2",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sally-photo-app",
+								"herokuapp",
+								"com"
 							],
-							"port": "3000",
 							"path": [
 								"albums",
 								"2"
@@ -439,12 +451,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/register",
-					"protocol": "http",
+					"raw": "https://sally-photo-app.herokuapp.com/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sally-photo-app",
+						"herokuapp",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"register"
 					]
@@ -470,12 +483,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/login",
-					"protocol": "http",
+					"raw": "https://sally-photo-app.herokuapp.com/login",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sally-photo-app",
+						"herokuapp",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"login"
 					]
